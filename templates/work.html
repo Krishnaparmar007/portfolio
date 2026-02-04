@@ -262,7 +262,7 @@
 <body>
 
     <nav>
-        <a href="index.html" class="back-btn">&lt; // RETURN_ROOT</a>
+        <a href="{{ url_for('home') }}" class="back-btn">&lt; // RETURN_ROOT</a>
         <a href="https://github.com/Krishnaparmar007" target="_blank" class="back-btn" style="font-size: 0.9rem;">::
             GITHUB_PROFILE ::</a>
     </nav>
@@ -367,7 +367,7 @@
         </div>
 
         <div style="margin-top: 5rem; text-align: center;">
-            <a href="Krishna Parmar Resume.pdf" target="_blank" class="btn"
+            <a href="{{ url_for('static', filename='Krishna Parmar Resume.pdf') }}" target="_blank" class="btn"
                 style="padding: 1rem 3rem; font-size: 1.1rem;">
                 [ DOWNLOAD FULL RESUME .PDF ]
             </a>
