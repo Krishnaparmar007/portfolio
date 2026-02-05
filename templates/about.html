@@ -202,6 +202,63 @@
             }
         }
 
+        /* Profile Image Section */
+        .profile-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .profile-image-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            padding: 5px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue), var(--python-yellow));
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.4), 0 0 60px rgba(0, 243, 255, 0.2);
+            transition: all 0.4s ease;
+            animation: pulse 3s infinite;
+        }
+
+        .profile-image-container:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 0 50px rgba(0, 243, 255, 0.6), 0 0 100px rgba(0, 243, 255, 0.3);
+        }
+
+        .profile-image-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            background: var(--glass-panel);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 243, 255, 0.3);
+        }
+
+        .profile-image-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .profile-image-container:hover .profile-image-inner img {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 30px rgba(0, 243, 255, 0.4), 0 0 60px rgba(0, 243, 255, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(0, 243, 255, 0.6), 0 0 80px rgba(0, 243, 255, 0.3);
+            }
+        }
+
         /* Fade In Animation */
         .fade-in {
             opacity: 0;
@@ -215,6 +272,14 @@
                 transform: translateY(0);
             }
         }
+
+        /* Responsive Profile Image */
+        @media (max-width: 768px) {
+            .profile-image-container {
+                width: 200px;
+                height: 200px;
+            }
+        }
     </style>
 </head>
 
@@ -226,6 +291,15 @@
 
     <main class="fade-in">
         <h1>About <span class="glitch">Me.</span></h1>
+
+        <!-- Profile Image Section -->
+        <div class="profile-section">
+            <div class="profile-image-container">
+                <div class="profile-image-inner">
+                    <img src="../static/me%202.png" alt="Krishna Parmar Profile">
+                </div>
+            </div>
+        </div>
 
         <section class="bio-panel">
             <p>
