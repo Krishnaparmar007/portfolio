@@ -187,21 +187,6 @@
             color: var(--neon-cyan);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .bio-panel {
-                padding: 1.5rem;
-            }
-
-            nav {
-                padding: 1rem;
-            }
-        }
-
         /* Profile Image Section */
         .profile-section {
             display: flex;
@@ -219,6 +204,167 @@
             box-shadow: 0 0 30px rgba(0, 243, 255, 0.4), 0 0 60px rgba(0, 243, 255, 0.2);
             transition: all 0.4s ease;
             animation: pulse 3s infinite;
+        }
+
+        /* Responsive Design - Comprehensive Breakpoints */
+
+        /* Extra Small Devices (320px to 480px) */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            main {
+                padding: 6rem 1rem 2rem;
+            }
+
+            .bio-panel {
+                padding: 1.5rem;
+            }
+
+            p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            .back-btn {
+                font-size: 0.9rem;
+            }
+
+            .profile-image-container {
+                width: 180px;
+                height: 180px;
+            }
+
+            .timeline {
+                padding-left: 1rem;
+                margin-top: 2rem;
+            }
+
+            .timeline-item {
+                padding-left: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .timeline-item::before {
+                left: -1.8rem;
+                width: 12px;
+                height: 12px;
+            }
+
+            .timeline-title {
+                font-size: 1.1rem;
+            }
+
+            .timeline-date {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Small Devices (481px to 768px) */
+        @media (min-width: 481px) and (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            main {
+                padding: 7rem 1.5rem 3rem;
+            }
+
+            .bio-panel {
+                padding: 2rem;
+            }
+
+            nav {
+                padding: 1.2rem 1.5rem;
+            }
+
+            .profile-image-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            .timeline {
+                margin-top: 3rem;
+            }
+
+            .timeline-title {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Tablets (769px to 1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            main {
+                padding: 7.5rem 2rem 3.5rem;
+                max-width: 900px;
+            }
+
+            .bio-panel {
+                padding: 2.5rem;
+            }
+
+            .profile-image-container {
+                width: 220px;
+                height: 220px;
+            }
+
+            .timeline-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Large Tablets and Small Laptops (1025px to 1440px) */
+        @media (min-width: 1025px) and (max-width: 1440px) {
+            h1 {
+                font-size: 3.2rem;
+            }
+
+            main {
+                max-width: 950px;
+            }
+
+            .profile-image-container {
+                width: 240px;
+                height: 240px;
+            }
+        }
+
+        /* Extra Large Screens (1441px and above) */
+        @media (min-width: 1441px) {
+            h1 {
+                font-size: 4rem;
+            }
+
+            main {
+                max-width: 1200px;
+            }
+
+            .bio-panel {
+                padding: 3.5rem;
+            }
+
+            .profile-image-container {
+                width: 280px;
+                height: 280px;
+            }
+
+            p {
+                font-size: 1.15rem;
+            }
+
+            .timeline-title {
+                font-size: 1.5rem;
+            }
         }
 
         .profile-image-container:hover {
