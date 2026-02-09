@@ -431,8 +431,18 @@
 
 <body>
 
-    <nav>
-        <a href="{{ url_for('home') }}" class="back-btn">&lt; // RETURN_ROOT</a>
+    <!-- Mobile Menu Toggle -->
+    <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav id="nav">
+        <a href="{{ url_for('about') }}">About Me</a>
+        <a href="{{ url_for('home') }}#skills">Tech Stack</a>
+        <a href="{{ url_for('work') }}">Work</a>
+        <a href="{{ url_for('home') }}#contact">Contact</a>
     </nav>
 
     <main class="fade-in">
@@ -560,6 +570,15 @@
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const nav = document.getElementById('nav');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            nav.classList.toggle('active');
         });
     </script>
 
