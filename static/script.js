@@ -1,3 +1,4 @@
+
 // --- 3D BACKGROUND: "THE DEEP LEARNING FLOW" ---
 const scene = new THREE.Scene();
 // Add subtle fog for depth perception
@@ -78,14 +79,76 @@ document.addEventListener('mousemove', (event) => {
     mouseY = (event.clientY - windowHalfY);
 });
 
-// --- SCROLL WARP EFFECT: DATA SURGE ON SECTION CHANGE ---
+// --- SCROLL TRANSFORM EFFECT ---
+// Define states for different sections
+const SECTION_STATES = {
+    'home': {
+        rotationSpeed: 0.002,
+        layerTilt: 0,
+        color: 0x306998,
+        particleColor: 0x00f3ff,
+        cameraZ: 10
+    },
+    'about': {
+        rotationSpeed: 0.005,
+        layerTilt: 0.5, // Tilted layers
+        color: 0xff00cc, // Magenta
+        particleColor: 0x00f3ff,
+        cameraZ: 15 // Pull back
+    },
+    'skills': {
+        rotationSpeed: 0.01,
+        layerTilt: Math.PI / 2, // Vertical walls
+        color: 0x00ff00, // Matrix Green
+        particleColor: 0xffffff,
+        cameraZ: 5 // Zoom in
+    },
+    'projects': {
+        rotationSpeed: -0.005,
+        layerTilt: Math.PI / 4,
+        color: 0xffd700, // Gold
+        particleColor: 0xff4500, // Orange
+        cameraZ: 12
+    },
+    'contact': {
+        rotationSpeed: 0,
+        layerTilt: 0,
+        color: 0xffffff,
+        particleColor: 0x00f3ff,
+        cameraZ: 20 // Far view
+    }
+};
+
+let currentState = SECTION_STATES['home']; // Default
+let targetState = SECTION_STATES['home'];
+
+// Interpolation helper
+function lerp(start, end, t) {
+    return start * (1 - t) + end * t;
+}
+
+// Color interpolation helper
+function lerpColor(color1, color2, t) {
+    const c1 = new THREE.Color(color1);
+    const c2 = new THREE.Color(color2);
+    c1.lerp(c2, t);
+    return c1;
+}
+
 // Variables to control the speed of the flow
 let baseSpeed = 0.1;
 let warpSpeed = 0;
 let activeSection = '';
 
 function triggerWarp() {
-    warpSpeed = 1.5; // Instant surge
+    warpSpeed = 2.0; // Stronger surge on transition
+}
+
+function updateState(sectionId) {
+    if (SECTION_STATES[sectionId]) {
+        targetState = SECTION_STATES[sectionId];
+        triggerWarp();
+    }
 }
 
 // --- ANIMATION LOOP ---
@@ -95,6 +158,22 @@ function animate() {
     requestAnimationFrame(animate);
     const time = clock.getElapsedTime();
 
+    // Smoothly transition current state to target state
+    currentState.rotationSpeed = lerp(currentState.rotationSpeed, targetState.rotationSpeed, 0.05);
+    currentState.layerTilt = lerp(currentState.layerTilt, targetState.layerTilt, 0.05);
+    currentState.cameraZ = lerp(currentState.cameraZ, targetState.cameraZ, 0.05);
+
+    // Lerp colors
+    const currentLayerColor = lerpColor(layerMaterial.color, targetState.color, 0.05);
+    layerMaterial.color.set(currentLayerColor);
+
+    const currentParticleColor = lerpColor(pMaterial.color, targetState.particleColor, 0.05);
+    pMaterial.color.set(currentParticleColor);
+
+    // Update Camera Position
+    camera.position.z = lerp(camera.position.z, currentState.cameraZ, 0.05);
+
+
     // Decay warp speed back to 0 smoothy
     warpSpeed *= 0.95;
     const currentSpeed = baseSpeed + warpSpeed;
@@ -103,26 +182,29 @@ function animate() {
     targetX = mouseX * 0.001;
     targetY = mouseY * 0.001;
 
-    // Very small interpolation factor (0.03) for "heavy" smooth feel
     camera.rotation.y += 0.03 * (-targetX - camera.rotation.y);
     camera.rotation.x += 0.03 * (-targetY - camera.rotation.x);
 
-    // 2. Animate Layers (Pulse + Flow towards camera)
+    // 2. Animate Layers
     layers.forEach((layer, index) => {
-        // Gentle rotation
-        layer.rotation.z += 0.002 * (index % 2 === 0 ? 1 : -1);
+        // Rotation based on state
+        layer.rotation.z += currentState.rotationSpeed * (index % 2 === 0 ? 1 : -1);
+
+        // Tilt transition (rotate X to change structure)
+        layer.rotation.x = lerp(layer.rotation.x, currentState.layerTilt, 0.05);
+
         // Subtle breathing
         const scale = 1 + Math.sin(time + index) * 0.02;
         layer.scale.set(scale, scale, 1);
 
-        // Move layers forward to simulate passing through them
+        // Move layers forward
         layer.position.z += currentSpeed;
         if (layer.position.z > 10) {
             layer.position.z -= 60; // Loop back
         }
     });
 
-    // 3. Animate Data Stream (Flow Forward)
+    // 3. Animate Data Stream
     const positions = particleSystem.geometry.attributes.position.array;
 
     for (let i = 0; i < particleCount; i++) {
@@ -193,7 +275,7 @@ if (menuToggle && nav) {
     });
 }
 
-// 4. Section Transition Observer (Triggers 3D Warp) & Fade In
+// 4. Section Transition Observer
 const observerConfig = {
     threshold: 0.2 // Trigger earlier for warp effect
 };
@@ -204,7 +286,8 @@ const sectionObserver = new IntersectionObserver((entries) => {
             // Trigger Warp Effect if switching to a new section
             if (entry.target.id && entry.target.id !== activeSection) {
                 activeSection = entry.target.id;
-                triggerWarp();
+                // Update 3D State
+                updateState(activeSection);
             }
             entry.target.classList.add('visible'); // Fade-in CSS
         }
