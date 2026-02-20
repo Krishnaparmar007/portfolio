@@ -332,3 +332,23 @@ const sectionObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('section').forEach(section => {
     sectionObserver.observe(section);
 });
+
+// 5. Contact Form Handler (Mailto Fix)
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent actual form submission warning
+
+        const firstName = document.getElementById('firstName') ? document.getElementById('firstName').value : '';
+        const lastName = document.getElementById('lastName') ? document.getElementById('lastName').value : '';
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        const subject = `Connection Request from Portfolio`;
+        const body = `Name: ${firstName} ${lastName}\nEmail: ${email}\n\nMessage:\n${message}`;
+
+        const mailtoLink = `mailto:krishnaparmar2003kp@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        window.location.href = mailtoLink;
+    });
+}
