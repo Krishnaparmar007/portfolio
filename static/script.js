@@ -74,10 +74,45 @@ let targetY = 0;
 const windowHalfX = window.innerWidth / 2;
 const windowHalfY = window.innerHeight / 2;
 
-document.addEventListener('mousemove', (event) => {
+function onDocumentMouseMove(event) {
     mouseX = (event.clientX - windowHalfX);
     mouseY = (event.clientY - windowHalfY);
-});
+}
+
+document.addEventListener('mousemove', onDocumentMouseMove);
+
+// --- GYROSCOPE SUPPORT FOR MOBILE ---
+function onDeviceOrientation(event) {
+    if (window.innerWidth < 768) { // Only enable on mobile/tablet
+        // Limit range and smoothing
+        const beta = Math.min(Math.max(event.beta, -45), 45); // X-axis tilt (-180 to 180)
+        const gamma = Math.min(Math.max(event.gamma, -45), 45); // Y-axis tilt (-90 to 90)
+
+        // Map to mouse coordinate space
+        mouseX = gamma * 15;
+        mouseY = beta * 15;
+    }
+}
+
+// Request permission for iOS 13+ devices
+if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+    // Permission must be requested in response to a user action (click), 
+    // so we'll add a one-time listener to the body or an overlay if strictly needed.
+    // For now, we will try to attach it, but on iOS it might need a specific tap.
+    // A common pattern is to ask on the first interaction.
+    document.body.addEventListener('click', function () {
+        DeviceOrientationEvent.requestPermission()
+            .then(response => {
+                if (response === 'granted') {
+                    window.addEventListener('deviceorientation', onDeviceOrientation);
+                }
+            })
+            .catch(console.error);
+    }, { once: true });
+} else {
+    // Non-iOS or older devices
+    window.addEventListener('deviceorientation', onDeviceOrientation);
+}
 
 // --- SCROLL TRANSFORM EFFECT ---
 // Define states for different sections
