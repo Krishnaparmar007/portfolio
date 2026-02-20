@@ -1141,6 +1141,23 @@ html {
     .timeline-date {
         font-size: 0.8rem;
     }
+
+    /* Vertical Contact Section for Phones */
+    .contact-container {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .contact-left,
+    .contact-right {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .form-submit-btn {
+        width: 100%;
+        align-self: stretch;
+    }
 }
 
 @media (min-width: 481px) and (max-width: 768px) {
