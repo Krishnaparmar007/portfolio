@@ -12,6 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Orbitron:wght@400;500;700;900&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -175,19 +176,73 @@
 
         <section id="contact" class="fade-in">
             <h2>Initialize Connection</h2>
-            <p>
-                Open to opportunities in AI, Medical Imaging, and Python Development.
-            </p>
-            <div style="margin-top: 2rem;">
-                <a href="mailto:krishnaparmar2003kp@gmail.com?subject=Connection%20Request%20from%20Portfolio"
-                    class="btn">>> Send Packet</a>
-                <a href="https://www.linkedin.com/in/krishnaparmar26" target="_blank" class="btn">:: Connect ::</a>
-            </div>
-            <div style="margin-top: 1.5rem;">
-                <a href="{{ url_for('static', filename='Krishna_Parmar_Resume.pdf') }}" target="_blank"
-                    class="btn resume-btn">
-                    [ DOWNLOAD FULL RESUME .PDF ]
-                </a>
+
+            <div class="contact-container">
+                <!-- Left Side: Info -->
+                <div class="contact-left">
+                    <h3 class="contact-sub-heading">I'd like to hear from you!</h3>
+                    <p class="contact-text">
+                        If you have any inquiries or just want to say hi, please use the contact form below.
+                        <br><br>
+                        Open to opportunities in <strong>AI</strong>, <strong>Medical Imaging</strong>, and
+                        <strong>Python
+                            Development</strong>.
+                    </p>
+
+                    <div class="contact-info-item">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <a href="mailto:krishnaparmar2003kp@gmail.com"
+                            style="color: #ccc; text-decoration: none; transition: 0.3s;"
+                            onmouseover="this.style.color='var(--neon-cyan)'"
+                            onmouseout="this.style.color='#ccc'">krishnaparmar2003kp@gmail.com</a>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="https://github.com/Krishnaparmar007" target="_blank" class="social-icon">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/krishnaparmar26" target="_blank" class="social-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <!-- Add other social links if available -->
+                    </div>
+
+                    <div style="margin-top: 2rem;">
+                        <a href="{{ url_for('static', filename='Krishna_Parmar_Resume.pdf') }}" target="_blank"
+                            class="btn resume-btn">
+                            [ DOWNLOAD FULL RESUME .PDF ]
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Side: Form -->
+                <div class="contact-right">
+                    <form class="contact-form" action="mailto:krishnaparmar2003kp@gmail.com" method="post"
+                        enctype="text/plain">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message"></textarea>
+                        </div>
+
+                        <button type="submit" class="form-submit-btn">Send</button>
+                    </form>
+                </div>
             </div>
         </section>
     </main>
