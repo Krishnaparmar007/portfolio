@@ -333,22 +333,52 @@ document.querySelectorAll('section').forEach(section => {
     sectionObserver.observe(section);
 });
 
-// 5. Contact Form Handler (Mailto Fix)
+// 5. Contact Form Handler (AJAX)
+// Using FormSubmit.co for backend-free email handling
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Prevent actual form submission warning
+    contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-        const firstName = document.getElementById('firstName') ? document.getElementById('firstName').value : '';
-        const lastName = document.getElementById('lastName') ? document.getElementById('lastName').value : '';
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
+        const submitBtn = this.querySelector('.form-submit-btn');
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = 'Sending...';
+        submitBtn.disabled = true;
 
-        const subject = `Connection Request from Portfolio`;
-        const body = `Name: ${firstName} ${lastName}\nEmail: ${email}\n\nMessage:\n${message}`;
+        const formData = new FormData(this);
 
-        const mailtoLink = `mailto:krishnaparmar2003kp@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-        window.location.href = mailtoLink;
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    submitBtn.innerText = 'Sent!';
+                    submitBtn.style.background = '#00ff00'; // Green success
+                    submitBtn.style.color = '#000';
+                    this.reset();
+                    setTimeout(() => {
+                        submitBtn.innerText = originalText;
+                        submitBtn.style.background = ''; // Reset
+                        submitBtn.style.color = '';
+                        submitBtn.disabled = false;
+                    }, 3000);
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                submitBtn.innerText = 'Failed';
+                submitBtn.style.background = '#ff0000'; // Red error
+                setTimeout(() => {
+                    submitBtn.innerText = originalText;
+                    submitBtn.style.background = '';
+                    submitBtn.disabled = false;
+                }, 3000);
+            });
     });
 }
