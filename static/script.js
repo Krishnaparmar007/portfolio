@@ -116,41 +116,53 @@ if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEve
 
 // --- SCROLL TRANSFORM EFFECT ---
 // Define states for different sections
+const getCameraZ = (section, isPortrait) => {
+    const mobileFactor = isPortrait ? 2.5 : 1; // Pull back more in portrait
+    const states = {
+        'home': 10 * mobileFactor,
+        'about': 15 * mobileFactor,
+        'skills': 5 * (isPortrait ? 1.5 : 1), // Don't zoom in TOO much on mobile
+        'projects': 12 * mobileFactor,
+        'contact': 20 * mobileFactor
+    };
+    return states[section] || 10;
+};
+
 const SECTION_STATES = {
     'home': {
         rotationSpeed: 0.002,
         layerTilt: 0,
         color: 0x306998,
         particleColor: 0x00f3ff,
-        cameraZ: 10
+        cameraZ: getCameraZ('home', window.innerHeight > window.innerWidth)
     },
     'about': {
         rotationSpeed: 0.005,
-        layerTilt: 0.5, // Tilted layers
-        color: 0xff00cc, // Magenta
+        layerTilt: 0.5,
+        color: 0xff00cc,
         particleColor: 0x00f3ff,
-        cameraZ: 15 // Pull back
+        cameraZ: getCameraZ('about', window.innerHeight > window.innerWidth)
     },
     'skills': {
         rotationSpeed: 0.01,
-        layerTilt: Math.PI / 2, // Vertical walls
-        color: 0x00ff00, // Matrix Green
+        layerTilt: Math.PI / 2,
+        color: 0x00ff00,
         particleColor: 0xffffff,
-        cameraZ: 5 // Zoom in
+        cameraZ: getCameraZ('skills', window.innerHeight > window.innerWidth)
     },
     'projects': {
         rotationSpeed: -0.005,
         layerTilt: Math.PI / 4,
-        color: 0xffd700, // Gold
-        particleColor: 0xff4500, // Orange
-        cameraZ: 12
+        color: 0xffd700,
+        particleColor: 0xff4500,
+        cameraZ: getCameraZ('projects', window.innerHeight > window.innerWidth)
     },
     'contact': {
         rotationSpeed: 0,
         layerTilt: 0,
         color: 0xffffff,
         particleColor: 0x00f3ff,
-        cameraZ: 20 // Far view
+        cameraZ: getCameraZ('contact', window.innerHeight > window.innerWidth)
     }
 };
 
@@ -266,6 +278,16 @@ window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // Recalculate camera distances for new orientation
+    const isPortrait = window.innerHeight > window.innerWidth;
+    Object.keys(SECTION_STATES).forEach(key => {
+        SECTION_STATES[key].cameraZ = getCameraZ(key, isPortrait);
+    });
+    // Sync current target state with updated values
+    if (activeSection && SECTION_STATES[activeSection]) {
+        targetState = SECTION_STATES[activeSection];
+    }
 });
 
 // --- UI INTERACTION LOGIC ---
