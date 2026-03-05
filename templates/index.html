@@ -45,28 +45,39 @@
 
     <main>
         <section id="about" class="fade-in">
-            <p
-                style="color: var(--neon-cyan); font-weight: bold; font-family: 'Fira Code', monospace; letter-spacing: 2px;">
-                HELLO_WORLD.PY</p>
-            <h1 class="glitch" data-text="KRISHNA PARMAR">KRISHNA PARMAR.</h1>
-            <p>
-                <span class="highlight">Python Developer</span> & <span class="highlight">Medical AI Specialist</span>.
-                <br><br>
-                Currently architecting deep learning pipelines at <strong style="color: #fff;">Arthro3D</strong>. I
-                specialize in 3D medical imaging (DICOM),
-                U-Net architectures,
-                and building real-time full-stack systems.
-            </p>
-            <div style="margin-top: 20px;">
-                <a href="https://github.com/Krishnaparmar007" target="_blank" class="btn">[ GitHub ]</a>
-                <a href="https://www.linkedin.com/in/krishnaparmar26" target="_blank" class="btn">[ LinkedIn ]</a>
+            <div class="about-container">
+                <div class="about-content">
+                    <p
+                        style="color: var(--neon-cyan); font-weight: bold; font-family: 'Fira Code', monospace; letter-spacing: 2px;">
+                        HELLO_WORLD.PY</p>
+                    <h1 class="glitch" data-text="KRISHNA PARMAR">KRISHNA PARMAR.</h1>
+                    <p>
+                        <span class="highlight">Python Developer</span> & <span class="highlight">Medical AI
+                            Specialist</span>.
+                        <br><br>
+                        Currently architecting deep learning pipelines at <strong
+                            style="color: #fff;">Arthro3D</strong>. I
+                        specialize in 3D medical imaging (DICOM),
+                        U-Net architectures,
+                        and building real-time full-stack systems.
+                    </p>
+                    <div style="margin-top: 20px;">
+                        <a href="https://github.com/Krishnaparmar007" target="_blank" class="btn">[ GitHub ]</a>
+                        <a href="https://www.linkedin.com/in/krishnaparmar26" target="_blank" class="btn">[ LinkedIn
+                            ]</a>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-wrapper">
+                        <img src="{{ url_for('static', filename='me2.png') }}" alt="Krishna Parmar">
+                    </div>
+                </div>
             </div>
-
         </section>
 
         <section id="skills" class="fade-in">
             <h2>Technical Arsenal</h2>
-            <div class="grid">
+            <div class="grid grid-2">
                 <div class="card">
                     <h3>🤖 AI & Computer Vision</h3>
                     <p style="border: none; padding: 0; background: none; box-shadow: none;">
@@ -109,6 +120,21 @@
                     <br>
                     <p style="font-size: 0.9rem; background: none; padding: 0; border: none; box-shadow: none;">
                         Expertise in medical data formats (NRRD, CSV, XML) and Git version control.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🌐 Web & Architecture</h3>
+                    <p style="border: none; padding: 0; background: none; box-shadow: none;">
+                        <span class="tag tag-secondary">Flask/FastAPI</span>
+                        <span class="tag tag-secondary">React</span>
+                        <span class="tag tag-secondary">REST APIs</span>
+                        <span class="tag tag-secondary">WebSockets</span>
+                        <span class="tag tag-secondary">Deployment</span>
+                    </p>
+                    <br>
+                    <p style="font-size: 0.9rem; background: none; padding: 0; border: none; box-shadow: none;">
+                        Building robust backends and interactive frontend dashboards for real-time data processing.
                     </p>
                 </div>
             </div>
